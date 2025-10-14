@@ -124,6 +124,8 @@
         <!-- Navigation Bar (Shared for all views) -->
         <header class="sticky top-0 z-50 bg-white shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                
+                <!-- GROVANCE Logo (Reverted to text for stability) -->
                 <div class="text-2xl font-extrabold text-grovance tracking-tight cursor-pointer" onclick="switchView('home')">
                     GROVANCE
                 </div>
@@ -995,7 +997,7 @@
             if (contactForm) {
                 contactForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    alertMessage("Thank you! Your message has been sent to the Grovance team (Simulated).");
+                    alertMessage("Thank thank you, your message has been sent to the Grovance team (Simulated).");
                     contactForm.reset();
                 });
             }
