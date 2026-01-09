@@ -1,0 +1,92 @@
+/* Custom CSS for a clean, student-friendly look */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f7f9fb; /* Light background */
+    scroll-behavior: smooth;
+}
+.text-grovance {
+    color: #3b82f6; /* Blue for primary branding */
+}
+.bg-grovance {
+    background-color: #3b82f6;
+}
+.cta-button {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+}
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+.section-card {
+    background-color: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+/* Class to hide content blocks */
+.hidden-view {
+    display: none;
+}
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+/* Custom style for active category link */
+.category-link {
+    cursor: pointer;
+    padding: 4px 0;
+    transition: color 0.2s;
+}
+.category-link:hover {
+    color: #3b82f6;
+}
+.category-link.active {
+    font-weight: 700;
+    color: #1d4ed8; /* Darker blue for active */
+}
+
+/* New Styles for Buy/Sell Mode Switch */
+.mode-button {
+    transition: background-color 0.2s, color 0.2s;
+}
+.mode-button.active {
+    background-color: #1d4ed8;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Toggle Switch CSS */
+.toggle-switch-container {
+    display: flex;
+    align-items: center;
+    background-color: #f3f4f6;
+    border-radius: 9999px;
+    padding: 4px;
+    position: relative;
+    width: 100%;
+}
+.toggle-label {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+.toggle-label.active {
+    color: white;
+}
+.toggle-slider {
+    position: absolute;
+    height: calc(100% - 8px);
+    top: 4px;
+    left: 4px;
+    background-color: #3b82f6;
+    border-radius: 9999px;
+    transition: transform 0.3s, width 0.3s;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
