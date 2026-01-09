@@ -4,133 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grovance - Campus-Verified Marketplace | Growth Made Simple</title>
-    <!-- Load Inter font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght=100..900&display=swap" rel="stylesheet">
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- Firebase Imports - REMOVED FOR STATIC DEMO RELIABILITY -->
-    <script>
-        // Placeholder for Firebase/Auth global variables to prevent errors in JS logic
-        window.firebaseApp = null;
-        window.auth = null;
-        window.db = null;
-        window.currentUserId = null;
-        window.isAuthReady = true; // Assume ready for static demo
-    </script>
-    
-    <style>
-        /* Custom CSS for a clean, student-friendly look */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f7f9fb; /* Light background */
-            scroll-behavior: smooth;
-        }
-        .text-grovance {
-            color: #3b82f6; /* Blue for primary branding */
-        }
-        .bg-grovance {
-            background-color: #3b82f6;
-        }
-        .cta-button {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-        }
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-        }
-        .section-card {
-            background-color: white;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-        }
-        /* Class to hide content blocks */
-        .hidden-view {
-            display: none;
-        }
-        .product-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-        /* Custom style for active category link */
-        .category-link {
-            cursor: pointer;
-            padding: 4px 0;
-            transition: color 0.2s;
-        }
-        .category-link:hover {
-            color: #3b82f6;
-        }
-        .category-link.active {
-            font-weight: 700;
-            color: #1d4ed8; /* Darker blue for active */
-        }
-        
-        /* New Styles for Buy/Sell Mode Switch */
-        .mode-button {
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .mode-button.active {
-            background-color: #1d4ed8;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Toggle Switch CSS */
-        .toggle-switch-container {
-            display: flex;
-            align-items: center;
-            background-color: #f3f4f6;
-            border-radius: 9999px;
-            padding: 4px;
-            position: relative;
-            width: 100%;
-        }
-        .toggle-label {
-            position: relative;
-            z-index: 10;
-            flex: 1;
-            text-align: center;
-            padding: 8px 0;
-            cursor: pointer;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        .toggle-label.active {
-            color: white;
-        }
-        .toggle-slider {
-            position: absolute;
-            height: calc(100% - 8px);
-            top: 4px;
-            left: 4px;
-            background-color: #3b82f6;
-            border-radius: 9999px;
-            transition: transform 0.3s, width 0.3s;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Main Container to hold all views -->
     <div id="app-container">
 
-        <!-- Navigation Bar (Shared for all views) -->
         <header class="sticky top-0 z-50 bg-white shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                 
-                <!-- GROVANCE Logo (Reverted to text for stability) -->
                 <div class="text-2xl font-extrabold text-grovance tracking-tight cursor-pointer" onclick="switchView('home')">
                     GROVANCE
                 </div>
                 
-                <!-- Main Navigation Links -->
                 <nav class="hidden md:flex space-x-8 text-gray-600 font-medium">
                     <a href="#" class="nav-link hover:text-grovance transition" data-view="home" onclick="switchView('home')">Home</a>
                     <a href="#" class="nav-link hover:text-grovance transition" data-view="about" onclick="switchView('about')">About Us</a>
@@ -138,45 +28,32 @@
                     <a href="#" class="nav-link hover:text-grovance transition" data-view="contact" onclick="switchView('contact')">Contact</a>
                 </nav>
                 
-                <!-- Search bar visible on marketplace view -->
                 <div class="w-1/2 hidden" id="marketplace-search-bar">
                     <input type="text" id="search-input" placeholder="Search books, electronics, furniture..."
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-grovance focus:border-grovance transition shadow-sm" />
                 </div>
 
-                <!-- Right Side Actions -->
                 <div class="flex items-center space-x-4">
                     
-                    <!-- Login Icon (New) -->
                     <button id="login-icon" class="text-gray-600 hover:text-grovance transition p-2 rounded-full hover:bg-gray-100" 
                             onclick="switchView('login')" title="Log In">
                         <i class="fas fa-sign-in-alt text-xl"></i>
                     </button>
                     
-                    <!-- Register/Logout Icon (Updated) -->
                     <button id="auth-icon" class="text-gray-600 hover:text-grovance transition p-2 rounded-full hover:bg-gray-100" 
                             onclick="handleAuthClick()" title="Register / Sign Out">
                         <i class="fas fa-user-plus text-xl"></i>
                     </button>
 
-                    <!-- Primary CTA Button (Contextual) -->
                     <button id="main-cta-btn" class="bg-grovance text-white px-5 py-2 rounded-full font-semibold cta-button" onclick="handleCtaClick()">
                         Join Now
                     </button>
                 </div>
             </div>
-            <!-- Auth Status Bar is now hidden permanently as we are not tracking real auth state -->
-            <!-- <div id="auth-status-bar" class="bg-yellow-100 text-yellow-800 text-sm text-center py-1 hidden">
-                You are viewing as a guest. Please register with your college email for full access.
-            </div> -->
         </header>
 
-        <!-- ============================================== -->
-        <!-- VIEW CONTAINERS -->
-        <!-- ============================================== -->
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-            <!-- 1. Home Page (Landing Section) -->
             <div id="home-view" class="view">
                 <section class="pt-10 pb-20 text-center">
                     <div class="max-w-4xl mx-auto">
@@ -224,7 +101,6 @@
                     </div>
                 </section>
                 
-                <!-- CTA Banner to Marketplace -->
                 <div class="bg-grovance/90 text-white mt-16 p-12 rounded-3xl text-center">
                     <h3 class="text-3xl font-bold mb-4">Ready to Grow Your Savings?</h3>
                     <button class="text-lg bg-white text-grovance px-8 py-3 rounded-full font-bold cta-button" onclick="switchView('register')">
@@ -233,7 +109,6 @@
                 </div>
             </div>
 
-            <!-- 2. About Page -->
             <div id="about-view" class="view hidden-view">
                 <section class="py-10">
                     <h1 class="text-5xl font-extrabold text-gray-900 mb-8 border-b pb-4">About Grovance</h1>
@@ -241,22 +116,19 @@
                         <div class="md:col-span-2">
                             <h2 class="text-3xl font-bold text-grovance mb-4">Our Purpose & Vision</h2>
                             <p class="text-lg text-gray-700 mb-6">
-                                **Grovance** is pioneering the transition to a circular, safe, and cost-effective student economy across India's college campuses. We were founded on the belief that securing essential study and living items shouldn't be expensive or risky. We are building the infrastructure for growth—financial, sustainable, and communal—for every student.
+                                **Grovance** is pioneering the transition to a circular, safe, and cost-effective student economy across India's college campuses.
                             </p>
                             <h3 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Value Proposition for Partners</h3>
                             <ul class="list-disc list-inside space-y-2 text-gray-600">
                                 <li>**Risk Mitigation:** Offering a verified alternative to unregulated Facebook/WhatsApp groups.</li>
-                                <li>**ESG Compliance:** Supporting university sustainability goals through reuse and waste reduction.</li>
-                                <li>**Student Welfare:** Directly addressing student financial stress by promoting affordability.</li>
+                                <li>**ESG Compliance:** Supporting university sustainability goals.</li>
+                                <li>**Student Welfare:** Addressing student financial stress.</li>
                             </ul>
                         </div>
                         <div class="section-card p-6">
                             <p class="text-sm font-semibold text-grovance">STATS FROM SURVEY</p>
                             <p class="text-4xl font-bold text-gray-900 mt-2 mb-1">56.7%</p>
                             <p class="text-gray-600">of students say a campus buy/sell platform is **Highly Needed**.</p>
-                            <hr class="my-4">
-                            <p class="text-4xl font-bold text-emerald-600 mb-1">4.16 / 5</p>
-                            <p class="text-gray-600">is the average trust rating for a peer-to-peer system.</p>
                         </div>
                     </div>
 
@@ -266,29 +138,25 @@
                             <i class="fas fa-user-tie text-5xl text-grovance mb-4"></i>
                             <h3 class="2xl font-bold text-gray-900">P Lokesh Sahitya</h3>
                             <p class="text-lg font-semibold text-gray-600">CEO (Chief Executive Officer)</p>
-                            <p class="text-gray-500 mt-3">Drives the vision and strategy of Grovance, ensuring growth, partnerships, and overall execution.</p>
                         </div>
                         <div class="section-card p-8 hover:bg-gray-50 transition">
                             <i class="fas fa-chart-line text-5xl text-green-600 mb-4"></i>
                             <h3 class="2xl font-bold text-gray-900">S Suneet</h3>
                             <p class="text-lg font-semibold text-gray-600">CFO (Chief Financial Officer)</p>
-                            <p class="text-gray-500 mt-3">Manages finances, revenue models, and ensures sustainable and profitable operations.</p>
                         </div>
                         <div class="section-card p-8 hover:bg-gray-50 transition">
                             <i class="fas fa-laptop-code text-5xl text-yellow-600 mb-4"></i>
                             <h3 class="2xl font-bold text-gray-900">N Trivikram</h3>
                             <p class="text-lg font-semibold text-gray-600">CTO (Chief Technology Officer)</p>
-                            <p class="text-gray-500 mt-3">Leads platform development, ensuring a secure, reliable, and student-friendly tech experience.</p>
                         </div>
                     </div>
                 </section>
             </div>
 
-             <!-- 7. Registration Page (New View) -->
-            <div id="register-view" class="view hidden-view">
+             <div id="register-view" class="view hidden-view">
                 <section class="py-10 max-w-md mx-auto">
                     <h1 class="text-4xl font-extrabold text-gray-900 mb-4 border-b pb-4 text-center">Campus Verification</h1>
-                    <p class="text-lg text-gray-600 mb-8 text-center">To ensure a safe and verified marketplace, you must register with your official **College Email ID**.</p>
+                    <p class="text-lg text-gray-600 mb-8 text-center">To ensure a safe marketplace, register with your official **College Email ID**.</p>
                     
                     <form id="register-form" class="section-card p-8 space-y-6">
                         <div class="space-y-1">
@@ -312,11 +180,10 @@
                 </section>
             </div>
 
-            <!-- 8. Login Page (New View) -->
-             <div id="login-view" class="view hidden-view">
+            <div id="login-view" class="view hidden-view">
                  <section class="py-10 max-w-md mx-auto">
                      <h1 class="text-4xl font-extrabold text-gray-900 mb-4 border-b pb-4 text-center">Log In</h1>
-                     <p class="text-lg text-gray-600 mb-8 text-center">Welcome back! Use your verified College Email ID to access the marketplace.</p>
+                     <p class="text-lg text-gray-600 mb-8 text-center">Welcome back! Use your verified College Email ID.</p>
                      
                      <form id="login-form" class="section-card p-8 space-y-6">
                          <div class="space-y-1">
@@ -335,16 +202,13 @@
                  </section>
              </div>
 
-            <!-- 3. Marketplace (Dynamic Prototype Page) -->
             <div id="marketplace-view" class="view hidden-view">
                 <section class="pt-10 pb-16">
                     <h1 class="text-4xl font-extrabold text-gray-900 mb-8 border-b pb-4">Campus Marketplace</h1>
 
                     <div class="grid lg:grid-cols-4 gap-6">
-                        <!-- Sidebar: Categories & Filters -->
                         <aside class="lg:col-span-1 p-6 section-card h-fit">
                             
-                            <!-- New: Buy/Sell Mode Switch -->
                             <h3 class="text-xl font-bold text-gray-900 mb-4 border-b pb-2">I'm Here To...</h3>
                             <div class="flex flex-col space-y-3 mb-8">
                                 <button id="mode-buy" class="mode-button active bg-grovance text-white py-2 rounded-lg font-semibold" onclick="setMarketplaceMode('buy', event)">
@@ -364,12 +228,8 @@
                                 <li class="category-link" data-category="Project Items" onclick="filterProducts('Project Items', event)"><i class="fas fa-cogs mr-2"></i> Project Items (Pi/Arduino)</li>
                                 <li class="category-link" data-category="Miscellaneous" onclick="filterProducts('Miscellaneous', event)"><i class="fas fa-box-open mr-2"></i> Miscellaneous</li>
                             </ul>
-
-                            <h3 class="text-xl font-bold text-gray-900 mt-8 mb-4 border-b pb-2">Price Range (₹)</h3>
-                            <p class="text-sm text-gray-500">Filters coming soon!</p>
                         </aside>
 
-                        <!-- Main Content: Product Listings -->
                         <main class="lg:col-span-3">
                             <div class="flex justify-between items-center mb-6">
                                 <p class="text-gray-600" id="item-count">Loading items...</p>
@@ -379,9 +239,7 @@
                                 </select>
                             </div>
 
-                            <!-- Product Grid (Amazon-like cards) - DYNAMICALLY POPULATED -->
                             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="product-grid">
-                                <!-- Dynamic Product Cards will be injected here by JavaScript -->
                                 <div class="col-span-full text-center py-10 text-gray-500 section-card" id="loading-message">
                                     <i class="fas fa-spinner fa-spin mr-2"></i> Loading marketplace data...
                                 </div>
@@ -391,7 +249,6 @@
                 </section>
             </div>
 
-            <!-- 4. Post an Item Page -->
             <div id="post-item-view" class="view hidden-view">
                 <section class="py-10 max-w-3xl mx-auto">
                     <h1 class="text-4xl font-extrabold text-gray-900 mb-4 border-b pb-4">Create a Listing</h1>
@@ -402,7 +259,6 @@
                             <i class="fas fa-exclamation-triangle mr-2"></i> You must be logged in to post an item. Please register or log in first.
                         </p>
 
-                        <!-- ITEM TYPE TOGGLE -->
                         <div class="space-y-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Listing Type</label>
                             <div class="toggle-switch-container">
@@ -419,10 +275,9 @@
 
                         <div>
                             <label for="item-title" class="block text-sm font-medium text-gray-700">Item Title</label>
-                            <input type="text" id="item-title" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-grovance focus:border-grovance" placeholder="e.g., Chemistry Textbook, Used Bike, Need Monitor">
+                            <input type="text" id="item-title" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-grovance focus:border-grovance" placeholder="e.g., Chemistry Textbook, Used Bike">
                         </div>
                         
-                        <!-- NEW: Price/Cost Input Area -->
                         <div id="price-input-container">
                             <label for="item-price" class="block text-sm font-medium text-gray-700" id="price-label">Price (₹)</label>
                             <input type="number" id="item-price" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-grovance focus:border-grovance" placeholder="e.g., 850">
@@ -456,18 +311,16 @@
                 </section>
             </div>
 
-            <!-- 5. Partners & Ambassadors Page -->
             <div id="partners-view" class="view hidden-view">
                 <section class="py-10">
                     <h1 class="text-5xl font-extrabold text-gray-900 mb-4 border-b pb-4">Partnerships & Campus Growth</h1>
-                    <p class="text-xl text-gray-600 mb-12">We are actively building strategic relationships with universities, student clubs, and campus leaders to scale our mission of affordability and sustainability.</p>
+                    <p class="text-xl text-gray-600 mb-12">We are actively building strategic relationships with universities, student clubs, and campus leaders.</p>
 
                     <div class="grid md:grid-cols-2 gap-12">
-                        <!-- University Partnerships -->
                         <div class="section-card p-8">
                             <i class="fas fa-university text-5xl text-grovance mb-4"></i>
                             <h2 class="text-3xl font-bold text-gray-900 mb-3">University Collaborations</h2>
-                            <p class="text-gray-700 mb-4">We partner with administration to offer a verified, secure platform for intra-campus commerce, directly supporting student welfare and institutional sustainability goals (ESG initiatives).</p>
+                            <p class="text-gray-700 mb-4">We partner with administration to offer a verified, secure platform for intra-campus commerce.</p>
                             <h3 class="font-semibold text-gray-800 mt-4">Key Benefits:</h3>
                             <ul class="list-disc list-inside text-gray-600 ml-4">
                                 <li>Formalized campus circular economy.</li>
@@ -476,17 +329,10 @@
                             </ul>
                         </div>
 
-                        <!-- Ambassador Program -->
                         <div class="section-card p-8">
                             <i class="fas fa-user-group text-5xl text-red-500 mb-4"></i>
                             <h2 class="text-3xl font-bold text-gray-900 mb-3">Campus Ambassador Program</h2>
-                            <p class="text-gray-700 mb-4">Join the Grovance movement! We empower student leaders to be the face of our platform, manage campus outreach, and earn incentives.</p>
-                            <h3 class="font-semibold text-gray-800 mt-4">What You Do:</h3>
-                            <ul class="list-disc list-inside text-gray-600 ml-4">
-                                <li>Campus outreach & marketing.</li>
-                                <li>Organize on-campus exchange events.</li>
-                                <li>Drive word-of-mouth adoption.</li>
-                            </ul>
+                            <p class="text-gray-700 mb-4">Join the Grovance movement! We empower student leaders to be the face of our platform.</p>
                             <button class="mt-6 bg-yellow-500 text-gray-900 py-2 px-6 rounded-full font-bold cta-button" onclick="switchView('contact')">
                                 Apply to be an Ambassador
                             </button>
@@ -495,7 +341,6 @@
                 </section>
             </div>
 
-            <!-- 6. Contact Page -->
             <div id="contact-view" class="view hidden-view">
                 <section class="py-10 max-w-xl mx-auto">
                     <h1 class="text-4xl font-extrabold text-gray-900 mb-4 border-b pb-4">Get in Touch</h1>
@@ -539,22 +384,19 @@
                 </section>
             </div>
 
-            <!-- CTA for Posting Item (Visible on Marketplace) -->
             <button id="post-item-float-btn" class="fixed bottom-6 right-6 z-40 bg-emerald-600 text-white p-4 rounded-full shadow-2xl cta-button text-lg font-bold hidden" onclick="handlePostItemClick()">
                 <i class="fas fa-plus mr-2"></i> Post Item
             </button>
 
         </main>
-        <!-- Footer (Shared for all views) -->
+        
         <footer class="py-12 bg-gray-900 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8">
-                <!-- Logo/Motto -->
                 <div>
                     <h3 class="text-2xl font-extrabold text-grovance mb-4">GROVANCE</h3>
                     <p class="text-gray-400">Growth Made Simple.</p>
                     <p class="text-sm text-gray-500 mt-2">&copy; 2025 Grovance. All rights reserved.</p>
                 </div>
-                <!-- Quick Links -->
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
                     <ul class="space-y-2 text-gray-400">
@@ -563,14 +405,12 @@
                         <li><a href="#" class="hover:text-grovance transition">Careers</a></li>
                     </ul>
                 </div>
-                <!-- The Team -->
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-white">The Leadership</h4>
                     <p class="text-gray-400">CEO: P Lokesh Sahitya</p>
                     <p class="text-gray-400">CFO: S Suneet</p>
                     <p class="text-gray-400">CTO: N Trivikram</p>
                 </div>
-                <!-- Social & Contact -->
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-white">Connect</h4>
                     <p class="text-gray-400">Connect with us on social media.</p>
@@ -585,458 +425,7 @@
 
     </div>
 
-    <!-- JavaScript Logic -->
-    <script>
-        // --- 1. Product Data (Using stable placeholders for reliable loading) ---
-        // 'type': 'sell' (item for sale) or 'buy_request' (user wants to buy this item)
-        const ALL_PRODUCTS = [
-            { id: 1, category: 'Textbooks', name: 'Discrete Mathematics and Its Applications (8th Ed.)', price: 700, listedBy: 'Joseph', image: 'https://placehold.co/400x300/F4D03F/000?text=MATH+BOOK', type: 'sell' },
-            { id: 2, category: 'Electronics', name: 'HP 24-inch Monitor (Used for 1 semester)', price: 3500, listedBy: 'Mahesh', image: 'https://placehold.co/400x300/5DADE2/000?text=MONITOR', type: 'sell' },
-            { id: 3, category: 'Furniture', name: 'Adjustable LED Desk Lamp (Black)', price: 850, listedBy: 'Arnav', image: 'https://placehold.co/400x300/A9CCE3/000?text=DESK+LAMP', type: 'sell' },
-            { id: 4, category: 'Electronics', name: 'WANTED: Low-cost Raspberry Pi 4 Model B', price: 0, listedBy: 'Admin', image: 'https://placehold.co/400x300/F08080/fff?text=WANTED', type: 'buy_request' }, // Simulated buy request
-            { id: 5, category: 'Textbooks', name: 'An Introduction to the Philosophy of Law', price: 300, listedBy: 'Chloe P.', image: 'https://placehold.co/400x300/F1C40F/000?text=LAW+BOOK', type: 'sell' },
-            { id: 6, category: 'Project Items', name: 'Arduino Uno Ultimate Starter Kit', price: 1800, listedBy: 'Alex M.', image: 'https://placehold.co/400x300/D7BDE2/000?text=ARDUINO+KIT', type: 'sell' },
-            { id: 7, category: 'Furniture', name: 'Single Bed Mattress (6ft x 3ft, Clean)', price: 1200, listedBy: 'Priya S.', image: 'https://placehold.co/400x300/FF5733/fff?text=MATTRESS', type: 'sell' },
-            { id: 8, category: 'Project Items', name: 'Solderless Breadboard MB-102 (New)', price: 180, listedBy: 'Ravi T.', image: 'https://placehold.co/400x300/FFC300/333?text=BREADBOARD', type: 'sell' },
-            { id: 9, category: 'Furniture', name: 'Compact Folding Study Table', price: 950, listedBy: 'Kiran N.', image: 'https://placehold.co/400x300/DAF7A6/333?text=STUDY+TABLE', type: 'sell' },
-            { id: 10, category: 'Electronics', name: 'Adjustable DC Power Supply (0-30V)', price: 4200, listedBy: 'Nitin J.', image: 'https://placehold.co/400x300/4CAF50/fff?text=POWER+SUPPLY', type: 'sell' },
-            { id: 11, category: 'Textbooks', name: 'WANTED: Used Linear Algebra Textbook', price: 0, listedBy: 'Admin', image: 'https://placehold.co/400x300/F08080/fff?text=WANTED', type: 'buy_request' }, // Simulated buy request
-        ];
-        
-        // --- 2. Element References & State ---
-        let allProducts = ALL_PRODUCTS; // Static data is default
-        let currentView = 'home';
-        let currentCategory = 'All';
-        let marketplaceMode = 'buy'; // New state: 'buy' (viewing items to buy) or 'sell' (viewing items to sell/buy requests)
-        let currentUser = null; // Simulated user state
-        let itemPostType = 'sell'; // State for the Post Item form: 'sell' or 'buy_request'
-
-        const views = {
-            'home': document.getElementById('home-view'),
-            'about': document.getElementById('about-view'),
-            'marketplace': document.getElementById('marketplace-view'),
-            'post-item': document.getElementById('post-item-view'),
-            'partners': document.getElementById('partners-view'),
-            'contact': document.getElementById('contact-view'),
-            'register': document.getElementById('register-view'),
-            'login': document.getElementById('login-view'),
-        };
-        const mainCtaButton = document.getElementById('main-cta-btn');
-        const marketplaceSearchBar = document.getElementById('marketplace-search-bar');
-        const productGrid = document.getElementById('product-grid');
-        const itemCountDisplay = document.getElementById('item-count');
-        const loadingMessage = document.getElementById('loading-message');
-        const postItemForm = document.getElementById('post-item-form');
-        const contactForm = document.getElementById('contact-form');
-        const registerForm = document.getElementById('register-form');
-        const loginForm = document.getElementById('login-form');
-        const searchInput = document.getElementById('search-input');
-        const postItemFloatBtn = document.getElementById('post-item-float-btn');
-        const authIcon = document.getElementById('auth-icon');
-        const loginIcon = document.getElementById('login-icon');
-        const postItemAuthWarning = document.getElementById('post-item-auth-warning');
-        
-        // Form specific elements
-        const postTypeSlider = document.getElementById('post-type-slider');
-        const postTypeSellLabel = document.getElementById('post-type-sell-label');
-        const postTypeBuyLabel = document.getElementById('post-type-buy-label');
-        const itemPostTypeInput = document.getElementById('item-post-type');
-        const priceInputContainer = document.getElementById('price-input-container');
-        const priceLabel = document.getElementById('price-label');
-        const itemPriceInput = document.getElementById('item-price');
-        const photoUploadContainer = document.getElementById('photo-upload-container');
-        const descriptionLabel = document.getElementById('description-label');
-        
-        // --- 3. Authentication UI Updates (SIMULATED) ---
-
-        function updateAuthUI(user) {
-            if (user) {
-                // Logged In User
-                authIcon.innerHTML = '<i class="fas fa-user-check text-xl text-green-600"></i>';
-                authIcon.title = 'Sign Out (' + user.email + ')';
-                authIcon.onclick = handleSignOut; 
-                loginIcon.classList.add('hidden'); // Hide dedicated login icon when logged in
-                if (loadingMessage) loadingMessage.classList.add('hidden');
-            } else {
-                // Not Logged In
-                authIcon.innerHTML = '<i class="fas fa-user-plus text-xl"></i>';
-                authIcon.title = 'Register';
-                authIcon.onclick = () => switchView('register');
-                loginIcon.classList.remove('hidden'); // Show dedicated login icon when logged out
-            }
-        }
-        
-        function handleSignOut() {
-            currentUser = null;
-            updateAuthUI(null);
-            alertMessage("You have been signed out (Simulated).");
-            switchView('home');
-        }
-        
-        function handleAuthClick() {
-            if (currentUser) {
-                handleSignOut();
-            } else {
-                switchView('register');
-            }
-        }
-        
-        // --- 4. Product Rendering and Filtering Logic ---
-        
-        function renderProductListings(productsToRender) {
-            let htmlContent = '';
-            
-            itemCountDisplay.textContent = `Showing ${productsToRender.length} items`;
-            
-            if (productsToRender.length === 0) {
-                 const message = marketplaceMode === 'buy' 
-                    ? `No items for sale found matching your filters.`
-                    : `No active buy requests found.`;
-                 htmlContent = `<div class="col-span-full text-center py-10 text-gray-500 section-card">${message}</div>`;
-            } else {
-                productsToRender.forEach(product => {
-                    const priceValue = typeof product.price === 'number' ? product.price : 0;
-                    
-                    let formattedPrice;
-                    let priceColor;
-                    let ctaText;
-                    let itemTag = '';
-
-                    if (product.type === 'buy_request') {
-                        // User is viewing buy requests (Mode: Sell)
-                        formattedPrice = 'WANTED';
-                        priceColor = 'text-red-500';
-                        ctaText = 'Offer To Sell';
-                        itemTag = `<span class="absolute top-2 right-2 bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded-full">WANTED</span>`;
-                    } else {
-                        // User is viewing items for sale (Mode: Buy)
-                        formattedPrice = new Intl.NumberFormat('en-IN', {
-                            style: 'currency',
-                            currency: 'INR',
-                            maximumFractionDigits: 0
-                        }).format(priceValue);
-                        priceColor = 'text-green-600';
-                        ctaText = 'View Details';
-                    }
-
-                    htmlContent += `
-                        <div class="p-4 section-card overflow-hidden hover:shadow-lg transition duration-300 cursor-pointer relative" 
-                             onclick="alertMessage('Showing details for: ${product.name}')">
-                             ${itemTag}
-                            <div class="h-48 bg-gray-200 rounded-xl mb-3 overflow-hidden">
-                                <img src="${product.image || 'https://placehold.co/400x300/CCCCCC/333333?text=NO+IMAGE'}" alt="${product.name}" class="product-image" onerror="this.onerror=null;this.src='https://placehold.co/400x300/CCCCCC/333333?text=Image+Error';" />
-                            </div>
-                            <p class="text-sm text-grovance font-semibold mb-1">${product.category || 'Uncategorized'}</p>
-                            <h4 class="font-bold text-gray-900 truncate">${product.name}</h4>
-                            <p class="text-2xl font-extrabold ${priceColor} my-2">${formattedPrice}</p>
-                            <p class="text-sm text-gray-500">Listed by: ${product.listedBy || 'Anonymous'}</p>
-                            <button class="mt-3 w-full bg-grovance text-white py-2 rounded-lg font-semibold hover:bg-grovance/90 transition">${ctaText}</button>
-                        </div>
-                    `;
-                });
-            }
-
-            productGrid.innerHTML = htmlContent;
-        }
-        
-        function filterProducts(category, event) {
-            if (event) {
-                event.preventDefault();
-                document.querySelectorAll('.category-link').forEach(link => link.classList.remove('active'));
-                event.currentTarget.classList.add('active');
-                if (searchInput) searchInput.value = '';
-            }
-
-            currentCategory = category;
-            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-
-            const filteredProducts = allProducts.filter(product => {
-                const productCategory = product.category || '';
-                const productName = product.name || '';
-                const productType = product.type || 'sell'; // Default to 'sell'
-
-                // 1. Check if the product type matches the current mode
-                // If mode is 'buy', show items marked 'sell' (items for sale)
-                // If mode is 'sell', show items marked 'buy_request' (items that others want to buy)
-                const modeMatch = marketplaceMode === 'buy' 
-                    ? productType === 'sell' 
-                    : productType === 'buy_request';
-
-                // 2. Check if the category matches
-                const categoryMatch = currentCategory === 'All' || productCategory === currentCategory;
-                
-                // 3. Check if the search term matches
-                const searchMatch = productName.toLowerCase().includes(searchTerm) || productCategory.toLowerCase().includes(searchTerm);
-                
-                return modeMatch && categoryMatch && searchMatch;
-            });
-
-            renderProductListings(filteredProducts);
-        }
-        
-        function setMarketplaceMode(mode, event) {
-            marketplaceMode = mode;
-            
-            // Update button styles
-            document.querySelectorAll('.mode-button').forEach(btn => btn.classList.remove('active', 'bg-grovance', 'text-white', 'bg-gray-200', 'text-gray-700', 'hover:bg-gray-300'));
-
-            const buyBtn = document.getElementById('mode-buy');
-            const sellBtn = document.getElementById('mode-sell');
-
-            if (mode === 'buy') {
-                buyBtn.classList.add('active', 'bg-grovance', 'text-white');
-                sellBtn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
-            } else {
-                sellBtn.classList.add('active', 'bg-grovance', 'text-white');
-                buyBtn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
-            }
-
-            // Reset category filter to 'All' and apply mode filter
-            currentCategory = 'All';
-            document.querySelectorAll('.category-link').forEach(link => link.classList.remove('active'));
-            document.querySelector('.category-link[data-category="All"]').classList.add('active');
-
-            filterProducts('All');
-        }
-        
-        // --- 5. Post Item Type Toggle Logic ---
-        function setItemPostType(type) {
-            itemPostType = type;
-            itemPostTypeInput.value = type;
-
-            const slider = document.getElementById('post-type-slider');
-            const containerWidth = slider.parentElement.offsetWidth - 8; // Full width minus padding
-            const labelWidth = containerWidth / 2;
-
-            // 1. Handle Slider Position and Width
-            if (type === 'sell') {
-                slider.style.transform = 'translateX(0)';
-                slider.style.width = `${labelWidth}px`;
-            } else {
-                slider.style.transform = `translateX(${labelWidth}px)`;
-                slider.style.width = `${labelWidth}px`;
-            }
-
-            // 2. Handle Label Colors
-            postTypeSellLabel.classList.toggle('active', type === 'sell');
-            postTypeSellLabel.classList.toggle('text-white', type === 'sell');
-            postTypeSellLabel.classList.toggle('text-gray-700', type !== 'sell');
-
-            postTypeBuyLabel.classList.toggle('active', type === 'buy_request');
-            postTypeBuyLabel.classList.toggle('text-white', type === 'buy_request');
-            postTypeBuyLabel.classList.toggle('text-gray-700', type !== 'buy_request');
-            
-            // 3. Handle Form Field Visibility/Labels
-            if (type === 'sell') {
-                priceInputContainer.classList.remove('hidden');
-                itemPriceInput.required = true;
-                itemPriceInput.placeholder = 'e.g., 850';
-                priceLabel.textContent = 'Price (₹)';
-                photoUploadContainer.classList.remove('hidden');
-                descriptionLabel.textContent = 'Description (Condition, usage history, preferred meeting spot)';
-
-            } else { // buy_request
-                priceInputContainer.classList.add('hidden');
-                itemPriceInput.required = false;
-                itemPriceInput.value = 0; // Set price to 0 for wanted items
-                photoUploadContainer.classList.add('hidden');
-                descriptionLabel.textContent = 'Description (What condition are you looking for, preferred budget, any urgency?)';
-            }
-        }
-        
-        // --- 6. View Switching Logic (Updated) ---
-
-        function handleCtaClick() {
-            // Main CTA redirects to register/login
-            switchView('register');
-        }
-        
-        function handlePostItemClick() {
-             // Check if user is logged in (Simulated)
-             if (currentUser) {
-                 switchView('post-item');
-             } else {
-                 alertMessage("Please log in or register to post an item (Simulated).");
-                 switchView('register');
-             }
-         }
-
-        function switchView(viewName) {
-            currentView = viewName;
-            
-            // Hide all views, then show the current one
-            Object.keys(views).forEach(key => views[key].classList.add('hidden-view'));
-            if(views[viewName]) {
-                 views[viewName].classList.remove('hidden-view');
-            }
-
-            // --- Contextual UI Updates ---
-            
-            // Post Item Warning Visibility
-            if (viewName === 'post-item') {
-                 if (currentUser) {
-                    postItemAuthWarning.classList.add('hidden');
-                 } else {
-                    postItemAuthWarning.classList.remove('hidden');
-                 }
-                 // Reset the post item form type when navigating to the page
-                 setItemPostType('sell');
-            }
-            
-            // Navbar CTA Button Logic
-            if (viewName === 'marketplace') {
-                mainCtaButton.innerHTML = '<i class="fas fa-plus mr-2"></i> List Item';
-                mainCtaButton.onclick = handlePostItemClick;
-                postItemFloatBtn.classList.remove('hidden');
-                
-            } else if (viewName === 'register' || viewName === 'login') {
-                 mainCtaButton.innerHTML = 'Register';
-                 mainCtaButton.onclick = () => switchView('register');
-                 postItemFloatBtn.classList.add('hidden');
-            } else {
-                mainCtaButton.innerHTML = 'Join Now';
-                mainCtaButton.onclick = () => switchView('register');
-                postItemFloatBtn.classList.add('hidden');
-            }
-            
-            // Search Bar Visibility
-            if (viewName === 'marketplace') {
-                marketplaceSearchBar.classList.remove('hidden');
-            } else {
-                marketplaceSearchBar.classList.add('hidden');
-            }
-
-            // --- Marketplace Initialization ---
-            if (viewName === 'marketplace') {
-                // Static initialization
-                loadingMessage.classList.add('hidden');
-                // Ensure the initial mode is set and filters are applied
-                setMarketplaceMode(marketplaceMode); 
-            }
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        // --- 7. Form Submission Handlers (SIMULATED) ---
-        function setupFormHandlers() {
-            if (registerForm) {
-                 registerForm.addEventListener('submit', (e) => {
-                     e.preventDefault();
-                     const email = document.getElementById('reg-email').value;
-                     
-                     // Simulate registration success
-                     currentUser = { email: email, uid: 'simulated_user_123' };
-                     updateAuthUI(currentUser);
-
-                     alertMessage(`Success! Welcome ${email}. You are now verified (Simulated).`);
-                     registerForm.reset();
-                     switchView('marketplace');
-                 });
-             }
-             
-             if (loginForm) {
-                 loginForm.addEventListener('submit', (e) => {
-                     e.preventDefault();
-                     const email = document.getElementById('login-email').value;
-                     
-                     // Simulate login success
-                     currentUser = { email: email, uid: 'simulated_user_123' };
-                     updateAuthUI(currentUser);
-
-                     alertMessage("Login successful (Simulated)!");
-                     loginForm.reset();
-                     switchView('marketplace');
-                 });
-             }
-
-            if (postItemForm) {
-                postItemForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    
-                    if (!currentUser) {
-                         alertMessage("Authentication required to post an item (Simulated).");
-                         switchView('register');
-                         return;
-                    }
-
-                    const type = document.getElementById('item-post-type').value;
-                    const priceInput = document.getElementById('item-price').value;
-                    
-                    // Determine price based on type
-                    let price = type === 'sell' ? parseInt(priceInput) : 0;
-
-                    // Simulated image handling
-                    const imageInput = document.getElementById('item-photo');
-                    const simulatedImage = type === 'sell' ? 'https://placehold.co/400x300/FF0000/fff?text=NEW+FOR+SALE' : 'https://placehold.co/400x300/800080/fff?text=NEW+WANTED';
-                    
-                    // Simulate adding item to the local list (NOT persistent)
-                    const newItem = {
-                        id: allProducts.length + 1,
-                        name: document.getElementById('item-title').value,
-                        category: document.getElementById('item-category').value,
-                        price: price,
-                        description: document.getElementById('item-description').value,
-                        listedBy: currentUser.email || 'Verified User',
-                        image: simulatedImage, 
-                        type: type // 'sell' or 'buy_request'
-                    };
-                    
-                    allProducts.push(newItem); // Add to local array
-                    
-                    const successMessage = type === 'sell' ? "Your item is now listed for sale!" : "Your 'Want to Buy' request is now active!";
-                    
-                    alertMessage(`Success! ${successMessage} (Simulated)`);
-                    postItemForm.reset();
-                    switchView('marketplace');
-                    
-                    // Immediately switch the marketplace mode to show the user their new listing
-                    setMarketplaceMode(type === 'sell' ? 'buy' : 'sell');
-                });
-            }
-
-            if (contactForm) {
-                contactForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    alertMessage("Thank thank you, your message has been sent to the Grovance team (Simulated).");
-                    contactForm.reset();
-                });
-            }
-        }
-
-        function alertMessage(message) {
-            console.log("APP MESSAGE:", message);
-            const oldModal = document.getElementById('app-message-modal');
-            if (oldModal) oldModal.remove();
-
-            const modal = document.createElement('div');
-            modal.id = 'app-message-modal';
-            // Use a clean, visible toast style
-            modal.className = 'fixed top-4 right-4 bg-gray-800 text-white p-4 rounded-xl shadow-xl transition-all duration-300 z-[100]';
-            modal.textContent = message;
-            document.body.appendChild(modal);
-
-            setTimeout(() => {
-                modal.classList.add('opacity-0');
-                setTimeout(() => modal.remove(), 300);
-            }, 3000);
-        }
-
-        // --- 7. Initialization ---
-        window.appLoaded = false;
-        window.onload = () => {
-             window.appLoaded = true;
-             setupFormHandlers();
-             
-             if (searchInput) {
-                 searchInput.addEventListener('input', () => filterProducts(currentCategory));
-             }
-             
-             // Initial UI update and view switch
-             updateAuthUI(currentUser);
-             switchView('home'); 
-        };
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
-
