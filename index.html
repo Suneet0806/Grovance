@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grovance | Campus Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.4/build/spline-viewer.js"></script>
+</head>
+<body>
+
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl glass-nav rounded-2xl z-50 transition-all duration-300">
+        <div class="px-6 h-16 flex items-center justify-between">
+            
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showView('view-home')">
+                <img src="logo.png" alt="Grovance Logo" class="h-10 w-auto object-contain transition-transform hover:scale-105 drop-shadow-sm">
+                <span class="text-2xl font-bold tracking-tight text-[#071F3F]">Grovance</span>
+            </div>
+            
+            <div id="nav-links" class="hidden md:flex space-x-10 text-sm font-semibold text-[#071F3F]">
+                <button onclick="showView('view-marketplace')" class="link-underline hover:text-[#2F6FA3] transition-colors">Marketplace</button>
+                <button onclick="showView('view-post')" class="link-underline hover:text-[#2F6FA3] transition-colors">Sell Item</button>
+            </div>
+
+            <div id="auth-links" class="flex items-center">
+                <button onclick="showView('view-register')" class="btn-gradient text-white px-6 py-2 rounded-full text-sm font-bold">Join Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10 pt-32 pb-20">
+
+        <section id="view-home" class="view active">
+            
+            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
+                
+                <div class="text-left space-y-8 relative z-10">
+                    <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-[1.1]">
+                        <span class="text-gradient block pb-2">Stop Wasting Money</span>
+                        <span class="text-[#071F3F]">& Ditch the Scams</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-[#2F6FA3] max-w-lg font-medium opacity-90 leading-relaxed">
+                        Join the exclusive, campus-verified marketplace. Buy, sell, and trade safely with your university peers.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 max-w-md">
+                        <input type="email" id="hero-email" placeholder="Enter your college email" class="w-full px-5 py-4 rounded-xl border border-[#7BB3D4]/30 bg-white focus:outline-none focus:border-[#2F6FA3] focus:ring-4 focus:ring-[#7BB3D4]/20 shadow-sm transition-all text-[#071F3F]">
+                        <button onclick="showView('view-register')" class="btn-gradient text-white px-8 py-4 rounded-xl font-bold whitespace-nowrap">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[400px] flex items-center justify-center lg:justify-end">
+                    <div class="absolute w-[100%] h-[100%] bg-gradient-to-tr from-[#7BB3D4]/20 to-[#2F6FA3]/10 rounded-full blur-3xl z-0"></div>
+                    
+                    <div class="relative z-10 w-full max-w-sm h-full flex items-center justify-center">
+                        <div class="floating w-64 h-64 shape-3d rounded-[2.5rem] transform rotate-12 flex items-center justify-center backdrop-blur-md border border-white/40">
+                            <svg class="w-24 h-24 text-white drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        
+                        <div class="floating-delayed absolute top-10 right-0 w-32 h-12 bg-[#071F3F] rounded-full shadow-[10px_10px_20px_rgba(7,31,63,0.3)] flex items-center justify-center border border-white/10">
+                            <span class="text-white text-sm font-bold">✔ Verified</span>
+                        </div>
+                        <div class="floating absolute bottom-10 left-0 w-36 h-16 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl flex items-center justify-center border border-white">
+                            <span class="text-[#2F6FA3] font-black text-lg">💰 Save 60%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 mt-32">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-5xl font-black text-[#071F3F] tracking-tight">A Safer, Smarter Campus Economy</h2>
+                    <p class="text-[#2F6FA3] mt-4 font-medium text-lg">Built exclusively for verified university students.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card p-10 rounded-3xl text-center group">
+                        <div class="w-20 h-20 mx-auto bg-[#F5F8FC] rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">📚</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#071F3F] mb-3">Affordable Essentials</h3>
+                        <p class="text-[#2F6FA3] text-sm leading-relaxed">Find textbooks, electronics, and dorm gear at student-friendly prices from your peers.</p>
+                    </div>
+
+                    <div class="feature-card p-10 rounded-3xl text-center group">
+                        <div class="w-20 h-20 mx-auto bg-[#F5F8FC] rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">🛡️</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#071F3F] mb-3">Campus-Verified Safety</h3>
+                        <p class="text-[#2F6FA3] text-sm leading-relaxed">No scammers. Only students with verified university email addresses can join and trade.</p>
+                    </div>
+
+                    <div class="feature-card p-10 rounded-3xl text-center group">
+                        <div class="w-20 h-20 mx-auto bg-[#F5F8FC] rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">♻️</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#071F3F] mb-3">Sustainability Drive</h3>
+                        <p class="text-[#2F6FA3] text-sm leading-relaxed">Reduce campus waste by passing down items. Good for your wallet, good for the planet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-marketplace" class="view max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 bg-white/50 p-6 rounded-2xl backdrop-blur-sm border border-white">
+                <h2 id="market-title" class="text-3xl font-black text-[#071F3F]">Items in your campus</h2>
+                <input type="text" placeholder="Search textbooks, electronics..." class="w-full md:w-96 p-3 rounded-xl shadow-sm text-[#071F3F]">
+            </div>
+            
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                </div>
+        </section>
+
+        <section id="view-register" class="view max-w-md mx-auto px-4 mt-10">
+            <div class="glass-card p-10 rounded-3xl shadow-xl relative overflow-hidden">
+                <h2 class="text-3xl font-black mb-6 text-center text-[#071F3F]">Join Grovance</h2>
+                <form onsubmit="handleRegister(event)" class="space-y-5 text-[#071F3F]">
+                    <input type="text" id="reg-name" placeholder="Full Name" required class="w-full p-4 rounded-xl shadow-sm">
+                    <input type="email" id="reg-email" placeholder="College Email (@vitapstudent.ac.in)" required class="w-full p-4 rounded-xl shadow-sm">
+                    <select id="reg-college" class="w-full p-4 rounded-xl shadow-sm font-medium">
+                        <option value="VIT AP ">VIT AP</option>
+                        <option value="VIT Chennai">VIT Chennai</option>
+                        <option value="IIT Madras">IIT Madras</option>
+                        <option value="SRM University">SRM University</option>
+                    </select>
+                    <input type="tel" id="reg-phone" placeholder="Phone Number" required class="w-full p-4 rounded-xl shadow-sm">
+                    <button type="submit" class="w-full btn-gradient text-white py-4 rounded-xl font-bold text-lg mt-4">Verify & Register</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="view-post" class="view max-w-2xl mx-auto px-4 mt-10">
+            <div class="glass-card p-10 rounded-3xl shadow-xl relative overflow-hidden">
+                <h2 class="text-3xl font-black mb-6 text-center text-[#071F3F]">List Your Item</h2>
+                <form id="post-item-form" onsubmit="handlePostItem(event)" class="space-y-5">
+                    <input type="text" id="post-title" placeholder="Item Name" required class="w-full p-4 rounded-xl shadow-sm text-[#071F3F]">
+                    <div class="grid grid-cols-2 gap-5">
+                        <input type="number" id="post-price" placeholder="Price (₹)" required class="p-4 rounded-xl shadow-sm text-[#071F3F]">
+                        <select id="post-category" class="p-4 rounded-xl shadow-sm text-[#071F3F] font-medium">
+                            <option>Books</option>
+                            <option>Electronics</option>
+                            <option>Hostel Essentials</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <textarea id="post-desc" placeholder="Describe the condition, usage, etc." class="w-full p-4 rounded-xl h-32 shadow-sm text-[#071F3F]"></textarea>
+                    
+                    <div class="border-2 border-dashed border-[#7BB3D4] p-8 text-center rounded-xl bg-white/50 hover:bg-white transition cursor-pointer group">
+                        <p class="text-[#2F6FA3] font-bold group-hover:text-[#071F3F]">Click to upload product image</p>
+                        <p class="text-xs text-[#7BB3D4] mt-2">(Simulation enabled for prototype)</p>
+                    </div>
+
+                    <button type="submit" class="w-full btn-gradient text-white py-4 rounded-xl font-bold text-lg mt-2">List Item Now</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="view-product-detail" class="view max-w-5xl mx-auto px-4 mt-10">
+            <button onclick="showView('view-marketplace')" class="mb-6 text-[#2F6FA3] hover:text-[#071F3F] font-bold flex items-center transition-colors">
+                <span class="mr-2">←</span> Back to Marketplace
+            </button>
+            <div id="detail-content">
+                </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

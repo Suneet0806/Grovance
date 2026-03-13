@@ -1,0 +1,196 @@
+/* --- GROVANCE BRAND & 3D SAAS UI SYSTEM --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Inter:wght@100..900&display=swap');
+/* 1. Brand Variables */
+:root {
+    --brand-navy: #071F3F;
+    --brand-blue: #2F6FA3;
+    --brand-accent: #7BB3D4;
+    --brand-bg: #F5F8FC;
+    --brand-gradient: linear-gradient(135deg, #071F3F, #2F6FA3);
+}
+
+/* Update your body styling to use the new font */
+body {
+    background-color: var(--brand-bg);
+    color: var(--brand-navy);
+    overflow-x: hidden;
+    /* Use Open Sans, falling back to Inter, then default sans-serif */
+    font-family: 'Open Sans', 'Inter', sans-serif; 
+}
+
+/* 3. Fluid View Switching */
+.view { 
+    display: none; 
+    opacity: 0; 
+}
+
+.view.active { 
+    display: block; 
+    animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.98); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* 4. Glassmorphism Panels */
+.glass-nav {
+    background: rgba(245, 248, 252, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 30px rgba(7, 31, 63, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 40px -10px rgba(7, 31, 63, 0.08);
+}
+
+/* 5. Typography Gradient */
+.text-gradient {
+    background: linear-gradient(135deg, #2F6FA3, #7BB3D4);
+    -webkit-background-clip: text; /* For Safari/Chrome */
+    background-clip: text;         /* Standard property */
+    -webkit-text-fill-color: transparent;
+    color: transparent;            /* Standard fallback */
+}
+
+/* 6. Buttons & Links */
+.btn-gradient {
+    background: var(--brand-gradient);
+    box-shadow: 0 4px 15px rgba(47, 111, 163, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    box-shadow: 0 8px 25px rgba(47, 111, 163, 0.5);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.link-underline {
+    position: relative;
+}
+
+.link-underline::after {
+    content: '';
+    position: absolute; 
+    width: 0; 
+    height: 2px;
+    bottom: -4px; 
+    left: 0;
+    background-color: var(--brand-blue);
+    transition: width 0.3s ease;
+}
+
+.link-underline:hover::after { 
+    width: 100%; 
+}
+
+/* 7. Forms & Inputs (Marketplace & Registration) */
+input, select, textarea {
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(47, 111, 163, 0.2) !important;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--brand-secondary) !important;
+    box-shadow: 0 0 0 4px rgba(123, 179, 212, 0.3);
+    background: #ffffff !important;
+}
+
+/* 8. Feature & Marketplace Cards */
+.feature-card {
+    background: linear-gradient(180deg, #ffffff 0%, rgba(245, 248, 252, 0.5) 100%);
+    box-shadow: 0 10px 30px -5px rgba(7, 31, 63, 0.05);
+    border: 1px solid rgba(123, 179, 212, 0.15);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(7, 31, 63, 0.12);
+    border-color: rgba(47, 111, 163, 0.3);
+}
+
+/* 9. Floating 3D Elements & Shapes */
+.shape-3d {
+    background: linear-gradient(135deg, #7BB3D4, #2F6FA3);
+    box-shadow: inset -10px -10px 20px rgba(7, 31, 63, 0.2), 
+                15px 15px 30px rgba(7, 31, 63, 0.15);
+}
+
+.floating { 
+    animation: float 6s ease-in-out infinite; 
+}
+
+.floating-delayed { 
+    animation: float 6s ease-in-out 3s infinite; 
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* 10. Animated Background Blobs */
+.bg-blobs {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    z-index: -1; 
+    overflow: hidden; 
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute; 
+    filter: blur(100px); 
+    opacity: 0.4;
+    animation: float-blob 14s infinite ease-in-out alternate;
+}
+
+.blob-1 { 
+    top: -10%; 
+    left: -5%; 
+    width: 600px; 
+    height: 600px; 
+    background: var(--brand-accent); 
+}
+
+.blob-2 { 
+    bottom: -10%; 
+    right: -5%; 
+    width: 700px; 
+    height: 700px; 
+    background: var(--brand-blue); 
+    animation-delay: -5s; 
+}
+
+.blob-3 { 
+    top: 30%; 
+    left: 40%; 
+    width: 500px; 
+    height: 500px; 
+    background: rgba(7, 31, 63, 0.15); 
+    animation-delay: -2s; 
+}
+
+@keyframes float-blob {
+    0% { transform: translateY(0px) scale(1); }
+    100% { transform: translateY(-60px) scale(1.1); }
+}
