@@ -3,7 +3,6 @@
 > **"Growth Made Simple"**  
 > A campus-verified marketplace for university students to buy, sell, and exchange essentials safely.
 
-![Grovance](public/logo.png)
 
 ---
 
