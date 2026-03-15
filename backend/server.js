@@ -15,7 +15,19 @@ const productRoutes = require("./routes/productRoutes");
 const app = express();
 
 // ── MIDDLEWARE ──────────────────────────────────────────────
-app.use(cors());
+// ✅ Allow requests from Vercel frontend and localhost
+app.use(cors({
+    origin: [
+        'http://localhost:5000',
+        'http://localhost:3000',
+        'http://127.0.0.1:5500',
+        'https://grovance-website.onrender.com',
+        /\.vercel\.app$/,      // allow any Vercel preview URL
+        /\.onrender\.com$/     // allow any Render URL
+    ],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
