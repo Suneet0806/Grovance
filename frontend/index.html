@@ -3,177 +3,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grovance | Campus Marketplace</title>
+    <title>Grovance | Growth Made Simple</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.4/build/spline-viewer.js"></script>
 </head>
 <body>
 
-    <div class="bg-blobs">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
+<div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+</div>
 
-    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl glass-nav rounded-2xl z-50 transition-all duration-300">
-        <div class="px-6 h-16 flex items-center justify-between">
-            
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="showView('view-home')">
-                <img src="logo.png" alt="Grovance Logo" class="h-10 w-auto object-contain transition-transform hover:scale-105 drop-shadow-sm">
-                <span class="text-2xl font-bold tracking-tight text-[#071F3F]">Grovance</span>
-            </div>
-            
-            <div id="nav-links" class="hidden md:flex space-x-10 text-sm font-semibold text-[#071F3F]">
-                <button onclick="showView('view-marketplace')" class="link-underline hover:text-[#2F6FA3] transition-colors">Marketplace</button>
-                <button onclick="showView('view-post')" class="link-underline hover:text-[#2F6FA3] transition-colors">Sell Item</button>
-            </div>
+<!-- ══ NAV ══════════════════════════════════════════ -->
+<nav class="fixed top-0 left-0 w-full glass-nav z-50" style="height:64px;">
+    <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between gap-4">
 
-            <div id="auth-links" class="flex items-center">
-                <button onclick="showView('view-register')" class="btn-gradient text-white px-6 py-2 rounded-full text-sm font-bold">Join Now</button>
+        <!-- Logo + brand -->
+        <div class="flex items-center gap-3 cursor-pointer flex-shrink-0" onclick="showView('view-home')"
+            style="background:rgba(255,255,255,0.95);border-radius:8px;padding:4px 14px 4px 6px;">
+            <img src="logo.png" alt="Grovance" style="height:44px;width:auto;object-fit:contain;">
+            <div>
+                <div style="font-size:16px;font-weight:900;color:#0D1B3E;line-height:1;letter-spacing:-0.3px;">Grovance</div>
+                <div style="font-size:9px;font-weight:600;color:#4A90D9;letter-spacing:1px;text-transform:uppercase;">Growth Made Simple</div>
             </div>
         </div>
-    </nav>
 
-    <main class="relative z-10 pt-32 pb-20">
+        <!-- Nav search -->
+        <div class="hidden md:flex flex-1 max-w-sm mx-4">
+            <div style="position:relative;width:100%;">
+                <input id="nav-search" type="text" placeholder="Search items, books, electronics..."
+                    style="width:100%;padding:8px 36px 8px 14px;border-radius:6px;border:none;outline:none;font-size:13px;color:#0D1B3E;background:#fff;"
+                    oninput="handleNavSearch(this.value)">
+                <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#8A98B4;font-size:14px;">🔍</span>
+            </div>
+        </div>
 
-        <section id="view-home" class="view active">
-            
-            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
-                
-                <div class="text-left space-y-8 relative z-10">
-                    <h1 class="text-5xl md:text-7xl font-black tracking-tighter leading-[1.1]">
-                        <span class="text-gradient block pb-2">Stop Wasting Money</span>
-                        <span class="text-[#071F3F]">& Ditch the Scams</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-[#2F6FA3] max-w-lg font-medium opacity-90 leading-relaxed">
-                        Join the exclusive, campus-verified marketplace. Buy, sell, and trade safely with your university peers.
+        <!-- Nav links -->
+        <div class="hidden md:flex items-center gap-8 text-sm font-semibold">
+            <button onclick="showView('view-marketplace')" class="link-underline">Marketplace</button>
+            <button onclick="showView('view-post')" class="link-underline">Sell Item</button>
+            <button onclick="showView('view-wanted')" class="link-underline">Wanted 🔍</button>
+            <button onclick="showView('view-my-listings')" id="my-listings-nav" class="link-underline" style="display:none;">My Listings</button>
+        </div>
+
+        <!-- Auth -->
+        <div id="auth-links" class="flex items-center flex-shrink-0">
+            <button onclick="showView('view-register')" class="btn-gradient text-white px-5 py-2 text-sm font-bold" style="border-radius:6px;">Join Free</button>
+        </div>
+    </div>
+</nav>
+
+<main style="padding-top:64px;padding-bottom:60px;">
+
+<!-- ══ HOME ══════════════════════════════════════════ -->
+<section id="view-home" class="view active">
+
+    <!-- HERO — navy bg matching deck -->
+    <div class="hero-wrap">
+
+        <!-- Decorative diagonal lines (like deck bg) -->
+        <div style="position:absolute;top:0;right:0;width:45%;height:100%;opacity:0.06;pointer-events:none;overflow:hidden;">
+            <div style="position:absolute;top:-40px;right:-60px;width:300px;height:600px;border:2px solid #fff;transform:rotate(-15deg);border-radius:4px;"></div>
+            <div style="position:absolute;top:40px;right:100px;width:200px;height:500px;border:1.5px solid #fff;transform:rotate(-15deg);border-radius:4px;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4" style="display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding-bottom:60px;">
+
+            <!-- Left copy -->
+            <div style="color:#fff;">
+                <!-- Survey badge from deck -->
+                <div class="survey-badge" style="margin-bottom:20px;">
+                    📊 56.7% of students say this is Highly Needed — Survey 2024
+                </div>
+
+                <h1 style="font-size:clamp(34px,5vw,60px);font-weight:900;line-height:1.08;color:#fff !important;margin-bottom:16px;">
+                    The Campus<br>
+                    <span style="color:#4A90D9;">Marketplace</span> Built<br>
+                    For <span style="color:#FFD54F;">Students</span>
+                </h1>
+
+                <p style="font-size:16px;color:rgba(255,255,255,0.78);max-width:480px;line-height:1.7;margin-bottom:28px;">
+                    Buy, sell &amp; exchange essentials with verified campus peers. No scams, no strangers — just your university community.
+                </p>
+
+                <!-- Search bar -->
+                <div style="display:flex;gap:0;max-width:500px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,0.25);margin-bottom:32px;">
+                    <input id="hero-search" type="text" placeholder="Search textbooks, electronics, hostel items..."
+                        style="flex:1;padding:14px 16px;border:none;outline:none;font-size:14px;color:#0D1B3E;background:transparent;"
+                        onkeydown="if(event.key==='Enter'){doHeroSearch()}">
+                    <button onclick="doHeroSearch()"
+                        style="background:#FF6D00;color:#fff;border:none;padding:14px 24px;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:background 0.15s;"
+                        onmouseover="this.style.background='#e65100'" onmouseout="this.style.background='#FF6D00'">
+                        Search →
+                    </button>
+                </div>
+
+                <!-- Stats from deck data -->
+                <div class="hero-stats">
+                    <div>
+                        <div class="hero-stat-num">4.16★</div>
+                        <div class="hero-stat-label">Student Rating</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">82%</div>
+                        <div class="hero-stat-label">Would Buy/Sell</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">60%</div>
+                        <div class="hero-stat-label">Avg. Savings</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">100%</div>
+                        <div class="hero-stat-label">Campus Verified</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: floating product cards -->
+            <div class="hidden lg:flex flex-col gap-3" style="min-width:200px;">
+                <div class="floating" style="background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 8px 28px rgba(0,0,0,0.18);min-width:190px;">
+                    <div style="font-size:10px;color:#8A98B4;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">📚 Just Listed</div>
+                    <div style="font-weight:700;color:#0D1B3E;font-size:14px;">Physics Textbook</div>
+                    <div style="font-size:20px;font-weight:900;color:#4A90D9;margin:4px 0;">₹450</div>
+                    <div style="font-size:11px;color:#2E7D32;font-weight:600;">✓ VIT Chennai • Verified</div>
+                </div>
+                <div class="floating-delayed" style="background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 8px 28px rgba(0,0,0,0.18);min-width:190px;">
+                    <div style="font-size:10px;color:#FF6D00;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">🔥 Hot Deal</div>
+                    <div style="font-weight:700;color:#0D1B3E;font-size:14px;">Sony WH-1000XM4</div>
+                    <div style="font-size:20px;font-weight:900;color:#FF6D00;margin:4px 0;">₹12,000</div>
+                    <div style="font-size:11px;color:#8A98B4;text-decoration:line-through;">MRP ₹28,990</div>
+                </div>
+                <div style="background:#FFD54F;border-radius:12px;padding:16px 20px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,0.15);">
+                    <div style="font-size:28px;">🎓</div>
+                    <div style="font-weight:800;color:#0D1B3E;font-size:13px;margin-top:6px;">Campus Verified<br>Sellers Only</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wave bottom — matching deck aesthetic -->
+        <svg class="hero-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,10 1440,40 L1440,80 L0,80 Z" fill="#F4F6F9"/>
+        </svg>
+    </div>
+
+    <!-- Trust strip -->
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="trust-strip">
+            <div class="trust-item"><span class="trust-icon">🛡️</span> Campus-Verified Only</div>
+            <div class="trust-item"><span class="trust-icon">💰</span> Save Up to 60%</div>
+            <div class="trust-item"><span class="trust-icon">⚡</span> Instant WhatsApp Contact</div>
+            <div class="trust-item"><span class="trust-icon">♻️</span> Sustainable Campus Trading</div>
+            <div class="trust-item"><span class="trust-icon">🔒</span> No Scammers · No Strangers</div>
+        </div>
+    </div>
+
+    <!-- Category grid -->
+    <div class="max-w-7xl mx-auto px-4 mt-12">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <h2 style="font-size:20px;font-weight:800;color:#0D1B3E !important;">Shop by Category</h2>
+            <button onclick="showView('view-marketplace')" style="color:#4A90D9;font-size:13px;font-weight:600;background:none;border:none;cursor:pointer;">View All →</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;">
+            <div onclick="goToCategory('Books')" class="cat-tile" style="background:#fff;border:1px solid #DDE3EE;border-radius:10px;padding:22px 16px;text-align:center;cursor:pointer;transition:all 0.2s;"
+                onmouseover="this.style.borderColor='#0D1B3E';this.style.boxShadow='0 6px 20px rgba(13,27,62,0.12)'"
+                onmouseout="this.style.borderColor='#DDE3EE';this.style.boxShadow='none'">
+                <div style="font-size:34px;margin-bottom:10px;">📚</div>
+                <div style="font-size:13px;font-weight:700;color:#0D1B3E;">Books</div>
+                <div style="font-size:11px;color:#8A98B4;margin-top:2px;">Textbooks &amp; Notes</div>
+            </div>
+            <div onclick="goToCategory('Electronics')" class="cat-tile" style="background:#fff;border:1px solid #DDE3EE;border-radius:10px;padding:22px 16px;text-align:center;cursor:pointer;transition:all 0.2s;"
+                onmouseover="this.style.borderColor='#0D1B3E';this.style.boxShadow='0 6px 20px rgba(13,27,62,0.12)'"
+                onmouseout="this.style.borderColor='#DDE3EE';this.style.boxShadow='none'">
+                <div style="font-size:34px;margin-bottom:10px;">💻</div>
+                <div style="font-size:13px;font-weight:700;color:#0D1B3E;">Electronics</div>
+                <div style="font-size:11px;color:#8A98B4;margin-top:2px;">Gadgets &amp; Devices</div>
+            </div>
+            <div onclick="goToCategory('Hostel Essentials')" class="cat-tile" style="background:#fff;border:1px solid #DDE3EE;border-radius:10px;padding:22px 16px;text-align:center;cursor:pointer;transition:all 0.2s;"
+                onmouseover="this.style.borderColor='#0D1B3E';this.style.boxShadow='0 6px 20px rgba(13,27,62,0.12)'"
+                onmouseout="this.style.borderColor='#DDE3EE';this.style.boxShadow='none'">
+                <div style="font-size:34px;margin-bottom:10px;">🏠</div>
+                <div style="font-size:13px;font-weight:700;color:#0D1B3E;">Hostel Essentials</div>
+                <div style="font-size:11px;color:#8A98B4;margin-top:2px;">Dorm &amp; Room Items</div>
+            </div>
+            <div onclick="goToCategory('Other')" class="cat-tile" style="background:#fff;border:1px solid #DDE3EE;border-radius:10px;padding:22px 16px;text-align:center;cursor:pointer;transition:all 0.2s;"
+                onmouseover="this.style.borderColor='#0D1B3E';this.style.boxShadow='0 6px 20px rgba(13,27,62,0.12)'"
+                onmouseout="this.style.borderColor='#DDE3EE';this.style.boxShadow='none'">
+                <div style="font-size:34px;margin-bottom:10px;">🎯</div>
+                <div style="font-size:13px;font-weight:700;color:#0D1B3E;">Other</div>
+                <div style="font-size:11px;color:#8A98B4;margin-top:2px;">Everything Else</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Grovance section — from deck -->
+    <div class="max-w-7xl mx-auto px-4 mt-14 mb-10">
+        <!-- Section header styled like deck -->
+        <div style="text-align:center;margin-bottom:36px;">
+            <div style="display:inline-block;background:#0D1B3E;color:#FFD54F;font-size:11px;font-weight:700;padding:4px 16px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Why Grovance?</div>
+            <h2 style="font-size:28px;font-weight:900;color:#0D1B3E !important;">A Safer, Smarter Campus Economy</h2>
+            <p style="color:#5A6A8A;margin-top:8px;font-size:15px;">Built exclusively for verified university students. Growth Made Simple.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+            <div class="feature-card" style="padding:28px;">
+                <div style="width:52px;height:52px;background:#EBF4FF;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:24px;">📚</div>
+                <h3 style="font-size:16px;margin-bottom:8px;">Affordable Essentials</h3>
+                <p style="font-size:13px;line-height:1.6;">Find textbooks, electronics, and dorm gear at student-friendly prices from your peers. Save up to 60%.</p>
+            </div>
+            <div class="feature-card" style="padding:28px;">
+                <div style="width:52px;height:52px;background:#EBF4FF;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:24px;">🛡️</div>
+                <h3 style="font-size:16px;margin-bottom:8px;">Campus-Verified Safety</h3>
+                <p style="font-size:13px;line-height:1.6;">No scammers. No unregulated groups. Only students with verified university email addresses can join and trade.</p>
+            </div>
+            <div class="feature-card" style="padding:28px;">
+                <div style="width:52px;height:52px;background:#EBF4FF;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:24px;">♻️</div>
+                <h3 style="font-size:16px;margin-bottom:8px;">Sustainability Drive</h3>
+                <p style="font-size:13px;line-height:1.6;">Reduce campus waste by passing down items you no longer need. Good for your wallet and good for the planet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA banner — navy like deck -->
+    <div style="background:var(--navy);margin:0;padding:48px 0;position:relative;overflow:hidden;">
+        <div style="position:absolute;right:-40px;top:-40px;width:300px;height:300px;border:2px solid rgba(255,255,255,0.06);border-radius:50%;"></div>
+        <div style="position:absolute;right:60px;bottom:-60px;width:200px;height:200px;border:2px solid rgba(255,255,255,0.04);border-radius:50%;"></div>
+        <div class="max-w-7xl mx-auto px-4" style="text-align:center;position:relative;z-index:1;">
+            <h2 style="font-size:28px;font-weight:900;color:#fff !important;margin-bottom:10px;">Ready to start saving?</h2>
+            <p style="color:rgba(255,255,255,0.7);font-size:15px;margin-bottom:28px;">Join thousands of students already buying and selling on Grovance.</p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                <button onclick="showView('view-register')"
+                    style="background:#FFD54F;color:#0D1B3E;border:none;padding:13px 32px;border-radius:6px;font-weight:800;font-size:15px;cursor:pointer;transition:all 0.15s;"
+                    onmouseover="this.style.background='#FFC107'" onmouseout="this.style.background='#FFD54F'">
+                    Get Started Free →
+                </button>
+                <button onclick="showView('view-marketplace')"
+                    style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.4);padding:13px 32px;border-radius:6px;font-weight:700;font-size:15px;cursor:pointer;transition:all 0.15s;"
+                    onmouseover="this.style.borderColor='rgba(255,255,255,0.8)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.4)'">
+                    Browse Marketplace
+                </button>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ══ MARKETPLACE ════════════════════════════════════ -->
+<section id="view-marketplace" class="view max-w-7xl mx-auto px-4 mt-6">
+    <div class="bg-white/50 p-5 mb-6" style="border-radius:12px;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:14px;">
+            <div>
+                <h2 id="market-title" style="font-size:20px;font-weight:800;color:#0D1B3E !important;">Campus Marketplace</h2>
+                <p id="market-count" style="font-size:13px;color:#8A98B4;margin-top:2px;"></p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <input id="market-search" type="text" placeholder="Search listings..."
+                    style="padding:10px 14px;width:240px;font-size:14px;" oninput="filterProducts(this.value)">
+                <select id="sort-select" onchange="sortProducts(this.value)"
+                    style="padding:10px 14px;font-size:13px;font-weight:500;min-width:150px;">
+                    <option value="newest">Newest First</option>
+                    <option value="hot">Most Viewed 🔥</option>
+                    <option value="price-low">Price: Low → High</option>
+                    <option value="price-high">Price: High → Low</option>
+                </select>
+            </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;overflow-x:auto;padding-bottom:4px;">
+            <button class="category-pill active" onclick="filterByCategory('All',this)">All Items</button>
+            <button class="category-pill" onclick="filterByCategory('Books',this)">📚 Books</button>
+            <button class="category-pill" onclick="filterByCategory('Electronics',this)">💻 Electronics</button>
+            <button class="category-pill" onclick="filterByCategory('Hostel Essentials',this)">🏠 Hostel</button>
+            <button class="category-pill" onclick="filterByCategory('Other',this)">🎯 Other</button>
+        </div>
+    </div>
+    <div id="product-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;"></div>
+</section>
+
+<!-- ══ LOGIN ══════════════════════════════════════════ -->
+<section id="view-login" class="view" style="max-width:420px;margin:40px auto;padding:0 16px;">
+    <div class="glass-card" style="padding:40px;">
+        <div style="text-align:center;margin-bottom:28px;">
+            <img src="logo.png" style="height:48px;margin:0 auto 12px;display:block;">
+            <h2 style="font-size:22px;font-weight:800;color:#0D1B3E !important;">Welcome Back</h2>
+            <p style="color:#8A98B4;font-size:13px;margin-top:4px;">Login with your registered email &amp; phone</p>
+        </div>
+        <form onsubmit="handleLogin(event)" style="display:flex;flex-direction:column;gap:14px;">
+            <input type="email" id="login-email" placeholder="College Email" required style="padding:13px 16px;">
+            <input type="tel" id="login-phone" placeholder="Phone Number" required style="padding:13px 16px;">
+            <button type="submit" class="btn-gradient" style="padding:13px;font-size:15px;font-weight:700;border-radius:6px;margin-top:4px;">Login →</button>
+        </form>
+        <p style="text-align:center;font-size:13px;color:#8A98B4;margin-top:20px;">
+            New here? <button onclick="showView('view-register')" style="color:#4A90D9;font-weight:700;background:none;border:none;cursor:pointer;">Create account</button>
+        </p>
+    </div>
+</section>
+
+<!-- ══ REGISTER ═══════════════════════════════════════ -->
+<section id="view-register" class="view" style="max-width:440px;margin:40px auto;padding:0 16px;">
+    <div class="glass-card" style="padding:40px;">
+        <div style="text-align:center;margin-bottom:28px;">
+            <img src="logo.png" style="height:48px;margin:0 auto 12px;display:block;">
+            <h2 style="font-size:22px;font-weight:800;color:#0D1B3E !important;">Join Grovance</h2>
+            <p style="color:#8A98B4;font-size:13px;margin-top:4px;">"Growth Made Simple" — Start for free</p>
+        </div>
+        <form onsubmit="handleRegister(event)" style="display:flex;flex-direction:column;gap:14px;">
+            <input type="text" id="reg-name" placeholder="Full Name" required style="padding:13px 16px;">
+            <input type="email" id="reg-email" placeholder="College Email (@vitapstudent.ac.in)" required style="padding:13px 16px;">
+            <select id="reg-college" style="padding:13px 16px;">
+                <option value="VIT AP">VIT AP</option>
+                <option value="VIT Chennai">VIT Chennai</option>
+                <option value="IIT Madras">IIT Madras</option>
+                <option value="SRM University">SRM University</option>
+            </select>
+            <input type="tel" id="reg-phone" placeholder="Phone Number" required style="padding:13px 16px;">
+            <button type="submit" class="btn-gradient" style="padding:13px;font-size:15px;font-weight:700;border-radius:6px;margin-top:4px;">Verify &amp; Register →</button>
+        </form>
+        <p style="text-align:center;font-size:13px;color:#8A98B4;margin-top:20px;">
+            Already registered? <button onclick="showView('view-login')" style="color:#4A90D9;font-weight:700;background:none;border:none;cursor:pointer;">Login here</button>
+        </p>
+    </div>
+</section>
+
+<!-- ══ POST ITEM ══════════════════════════════════════ -->
+<section id="view-post" class="view" style="max-width:600px;margin:40px auto;padding:0 16px;">
+    <div class="glass-card" style="padding:36px;">
+        <h2 style="font-size:22px;font-weight:800;color:#0D1B3E !important;margin-bottom:6px;">List Your Item</h2>
+        <p style="color:#8A98B4;font-size:13px;margin-bottom:24px;">Fill in the details below — your item will be visible to all verified campus students.</p>
+        <form id="post-item-form" onsubmit="handlePostItem(event)" style="display:flex;flex-direction:column;gap:14px;">
+            <input type="text" id="post-title" placeholder="Item Title (e.g. Sony WH-1000XM4 Headphones)" required style="padding:13px 16px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <input type="number" id="post-price" placeholder="Selling Price (₹)" required style="padding:13px 16px;">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                <input type="number" id="post-min-price" placeholder="Min. Acceptable Price (₹)" style="padding:13px 16px;">
+                <div style="display:flex;align-items:center;background:#EBF4FF;border-radius:6px;padding:10px 14px;font-size:12px;color:#1565C0;font-weight:500;">
+                    🤖 AI won't negotiate below this
+                </div>
+                <select id="post-category" style="padding:13px 16px;">
+                    <option>Books</option>
+                    <option>Electronics</option>
+                    <option>Hostel Essentials</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <textarea id="post-desc" placeholder="Describe the condition, age, and usage of the item..." style="padding:13px 16px;height:110px;resize:vertical;"></textarea>
+            <div style="border:2px dashed #C0C8DA;border-radius:8px;padding:24px;text-align:center;background:#F8F9FC;transition:border-color 0.15s;"
+                onmouseover="this.style.borderColor='#4A90D9'" onmouseout="this.style.borderColor='#C0C8DA'">
+                <input type="file" id="post-image" accept="image/*" style="display:none;" onchange="previewImage(this)">
+                <label for="post-image" style="cursor:pointer;display:block;">
+                    <div id="image-preview-wrap">
+                        <div style="font-size:36px;margin-bottom:8px;">📷</div>
+                        <div style="font-size:14px;font-weight:600;color:#4A90D9;">Click to upload product photo</div>
+                        <div style="font-size:12px;color:#8A98B4;margin-top:4px;">JPG, PNG — max 5MB</div>
+                    </div>
+                </label>
+            </div>
+            <button type="submit" class="btn-orange" style="padding:14px;font-size:15px;margin-top:4px;">List Item on Grovance →</button>
+        </form>
+    </div>
+</section>
+
+<!-- ══ PRODUCT DETAIL ════════════════════════════════ -->
+<section id="view-product-detail" class="view" style="max-width:1000px;margin:0 auto;padding:20px 16px;">
+    <button onclick="showView('view-marketplace')"
+        style="display:inline-flex;align-items:center;gap:6px;color:#4A90D9;font-weight:600;font-size:14px;background:none;border:none;cursor:pointer;margin-bottom:20px;padding:0;">
+        ← Back to Marketplace
+    </button>
+    <div id="detail-content"></div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer style="background:var(--navy);color:rgba(255,255,255,0.6);text-align:center;padding:24px 16px;font-size:13px;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px;">
+        <img src="logo.png" style="height:28px;opacity:0.9;">
+        <span style="color:#fff;font-weight:700;">Grovance</span>
+        <span style="color:rgba(255,255,255,0.4);">·</span>
+        <span style="color:#FFD54F;font-size:11px;font-weight:600;">Growth Made Simple</span>
+    </div>
+    <p style="color:rgba(255,255,255,0.4) !important;font-size:12px;">© 2025 Grovance · Built for campus students by campus students</p>
+</footer>
+
+<!-- ══ WANTED SECTION ═══════════════════════════════════ -->
+<section id="view-wanted" class="view" style="max-width:1100px;margin:0 auto;padding:24px 16px;">
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;">
+
+        <!-- Left: wanted listings -->
+        <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                <div>
+                    <h2 style="font-size:20px;font-weight:800;color:#0D1B3E !important;">Wanted Board</h2>
+                    <p style="font-size:13px;color:#8A98B4;margin-top:2px !important;">
+                        Students looking to buy — if you have the item, contact them directly
                     </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-3 max-w-md">
-                        <input type="email" id="hero-email" placeholder="Enter your college email" class="w-full px-5 py-4 rounded-xl border border-[#7BB3D4]/30 bg-white focus:outline-none focus:border-[#2F6FA3] focus:ring-4 focus:ring-[#7BB3D4]/20 shadow-sm transition-all text-[#071F3F]">
-                        <button onclick="showView('view-register')" class="btn-gradient text-white px-8 py-4 rounded-xl font-bold whitespace-nowrap">
-                            Get Started
-                        </button>
-                    </div>
-                </div>
-
-                <div class="relative w-full h-[400px] flex items-center justify-center lg:justify-end">
-                    <div class="absolute w-[100%] h-[100%] bg-gradient-to-tr from-[#7BB3D4]/20 to-[#2F6FA3]/10 rounded-full blur-3xl z-0"></div>
-                    
-                    <div class="relative z-10 w-full max-w-sm h-full flex items-center justify-center">
-                        <div class="floating w-64 h-64 shape-3d rounded-[2.5rem] transform rotate-12 flex items-center justify-center backdrop-blur-md border border-white/40">
-                            <svg class="w-24 h-24 text-white drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                        </div>
-                        
-                        <div class="floating-delayed absolute top-10 right-0 w-32 h-12 bg-[#071F3F] rounded-full shadow-[10px_10px_20px_rgba(7,31,63,0.3)] flex items-center justify-center border border-white/10">
-                            <span class="text-white text-sm font-bold">✔ Verified</span>
-                        </div>
-                        <div class="floating absolute bottom-10 left-0 w-36 h-16 bg-white/90 backdrop-blur-md rounded-2xl shadow-xl flex items-center justify-center border border-white">
-                            <span class="text-[#2F6FA3] font-black text-lg">💰 Save 60%</span>
-                        </div>
-                    </div>
                 </div>
             </div>
+            <div id="wanted-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
+        </div>
 
-            <div class="max-w-7xl mx-auto px-4 mt-32">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-5xl font-black text-[#071F3F] tracking-tight">A Safer, Smarter Campus Economy</h2>
-                    <p class="text-[#2F6FA3] mt-4 font-medium text-lg">Built exclusively for verified university students.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="feature-card p-10 rounded-3xl text-center group">
-                        <div class="w-20 h-20 mx-auto bg-[#F5F8FC] rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform">
-                            <span class="text-4xl">📚</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-[#071F3F] mb-3">Affordable Essentials</h3>
-                        <p class="text-[#2F6FA3] text-sm leading-relaxed">Find textbooks, electronics, and dorm gear at student-friendly prices from your peers.</p>
-                    </div>
-
-                    <div class="feature-card p-10 rounded-3xl text-center group">
-                        <div class="w-20 h-20 mx-auto bg-[#F5F8FC] rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform">
-                            <span class="text-4xl">🛡️</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-[#071F3F] mb-3">Campus-Verified Safety</h3>
-                        <p class="text-[#2F6FA3] text-sm leading-relaxed">No scammers. Only students with verified university email addresses can join and trade.</p>
-                    </div>
-
-                    <div class="feature-card p-10 rounded-3xl text-center group">
-                        <div class="w-20 h-20 mx-auto bg-[#F5F8FC] rounded-2xl flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform">
-                            <span class="text-4xl">♻️</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-[#071F3F] mb-3">Sustainability Drive</h3>
-                        <p class="text-[#2F6FA3] text-sm leading-relaxed">Reduce campus waste by passing down items. Good for your wallet, good for the planet.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="view-marketplace" class="view max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 bg-white/50 p-6 rounded-2xl backdrop-blur-sm border border-white">
-                <h2 id="market-title" class="text-3xl font-black text-[#071F3F]">Items in your campus</h2>
-                <input type="text" placeholder="Search textbooks, electronics..." class="w-full md:w-96 p-3 rounded-xl shadow-sm text-[#071F3F]">
-            </div>
-            
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                </div>
-        </section>
-
-        <section id="view-register" class="view max-w-md mx-auto px-4 mt-10">
-            <div class="glass-card p-10 rounded-3xl shadow-xl relative overflow-hidden">
-                <h2 class="text-3xl font-black mb-6 text-center text-[#071F3F]">Join Grovance</h2>
-                <form onsubmit="handleRegister(event)" class="space-y-5 text-[#071F3F]">
-                    <input type="text" id="reg-name" placeholder="Full Name" required class="w-full p-4 rounded-xl shadow-sm">
-                    <input type="email" id="reg-email" placeholder="College Email (@vitapstudent.ac.in)" required class="w-full p-4 rounded-xl shadow-sm">
-                    <select id="reg-college" class="w-full p-4 rounded-xl shadow-sm font-medium">
-                        <option value="VIT AP ">VIT AP</option>
-                        <option value="VIT Chennai">VIT Chennai</option>
-                        <option value="IIT Madras">IIT Madras</option>
-                        <option value="SRM University">SRM University</option>
+        <!-- Right: post a wanted request -->
+        <div class="glass-card" style="padding:24px;position:sticky;top:84px;">
+            <h3 style="font-size:16px;font-weight:800;color:#0D1B3E !important;margin-bottom:6px;">Looking for something?</h3>
+            <p style="font-size:13px;color:#8A98B4;margin-bottom:18px !important;">Post what you need — sellers from your campus will reach out.</p>
+            <form id="wanted-form" onsubmit="handlePostWanted(event)" style="display:flex;flex-direction:column;gap:12px;">
+                <input type="text" id="wanted-title" placeholder="What are you looking for? (e.g. Arduino Kit)" required style="padding:11px 14px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    <input type="number" id="wanted-budget" placeholder="Max Budget (₹)" style="padding:11px 14px;">
+                    <select id="wanted-category" style="padding:11px 14px;">
+                        <option value="">Any Category</option>
+                        <option>Books</option>
+                        <option>Electronics</option>
+                        <option>Hostel Essentials</option>
+                        <option>Other</option>
                     </select>
-                    <input type="tel" id="reg-phone" placeholder="Phone Number" required class="w-full p-4 rounded-xl shadow-sm">
-                    <button type="submit" class="w-full btn-gradient text-white py-4 rounded-xl font-bold text-lg mt-4">Verify & Register</button>
-                </form>
-            </div>
-        </section>
-
-        <section id="view-post" class="view max-w-2xl mx-auto px-4 mt-10">
-            <div class="glass-card p-10 rounded-3xl shadow-xl relative overflow-hidden">
-                <h2 class="text-3xl font-black mb-6 text-center text-[#071F3F]">List Your Item</h2>
-                <form id="post-item-form" onsubmit="handlePostItem(event)" class="space-y-5">
-                    <input type="file" id="post-image" accept="image/*" class="w-full p-3 border rounded-xl bg-white">
-                    <div class="grid grid-cols-2 gap-5">
-                        <input type="number" id="post-price" placeholder="Price (₹)" required class="p-4 rounded-xl shadow-sm text-[#071F3F]">
-                        <select id="post-category" class="p-4 rounded-xl shadow-sm text-[#071F3F] font-medium">
-                            <option>Books</option>
-                            <option>Electronics</option>
-                            <option>Hostel Essentials</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <textarea id="post-desc" placeholder="Describe the condition, usage, etc." class="w-full p-4 rounded-xl h-32 shadow-sm text-[#071F3F]"></textarea>
-                    
-                    <div class="border-2 border-dashed border-[#7BB3D4] p-8 text-center rounded-xl bg-white/50 hover:bg-white transition cursor-pointer group">
-                        <p class="text-[#2F6FA3] font-bold group-hover:text-[#071F3F]">Click to upload product image</p>
-                        <p class="text-xs text-[#7BB3D4] mt-2">(Simulation enabled for prototype)</p>
-                    </div>
-
-                    <button type="submit" class="w-full btn-gradient text-white py-4 rounded-xl font-bold text-lg mt-2">List Item Now</button>
-                </form>
-            </div>
-        </section>
-
-        <section id="view-product-detail" class="view max-w-5xl mx-auto px-4 mt-10">
-            <button onclick="showView('view-marketplace')" class="mb-6 text-[#2F6FA3] hover:text-[#071F3F] font-bold flex items-center transition-colors">
-                <span class="mr-2">←</span> Back to Marketplace
-            </button>
-            <div id="detail-content">
                 </div>
-        </section>
+                <textarea id="wanted-desc" placeholder="Any specific details? (condition, brand, model...)" style="padding:11px 14px;height:80px;resize:none;"></textarea>
+                <button type="submit"
+                    style="background:#0D1B3E;color:#fff;border:none;padding:12px;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;"
+                    onmouseover="this.style.background='#1E3260'" onmouseout="this.style.background='#0D1B3E'">
+                    Post Wanted Request →
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
 
-    </main>
+<!-- ══ OFFER MODAL ════════════════════════════════════ -->
+<div id="offer-modal" style="display:none;" class="modal-overlay" onclick="closeOfferModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <h3 style="font-size:18px;font-weight:800;color:#0D1B3E;">Make an Offer 💬</h3>
+            <button onclick="closeOfferModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#8A98B4;line-height:1;">×</button>
+        </div>
+        <p style="font-size:13px;color:#8A98B4;margin-bottom:4px;">Listed price: <strong id="modal-listed-price" style="color:#0D1B3E;"></strong></p>
+        <p style="font-size:13px;color:#8A98B4;margin-bottom:16px;">Your offer will be sent directly to the seller on WhatsApp.</p>
+        <input type="number" id="offer-amount" placeholder="Your offer price (₹)"
+            style="width:100%;padding:12px 14px;margin-bottom:12px;">
+        <textarea id="offer-message" placeholder="Optional message — e.g. 'I can pick up today, can you do ₹400?'"
+            style="width:100%;padding:12px 14px;height:88px;resize:none;margin-bottom:16px;"></textarea>
+        <button onclick="sendOffer()"
+            style="width:100%;background:#25D366;color:#fff;border:none;padding:14px;border-radius:6px;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Send Offer on WhatsApp
+        </button>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<!-- ══ MY LISTINGS SECTION ═══════════════════════════════ -->
+<section id="view-my-listings" class="view" style="max-width:900px;margin:0 auto;padding:24px 16px;">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+        <div>
+            <h2 style="font-size:22px;font-weight:800;color:#0D1B3E !important;">My Listings</h2>
+            <p style="font-size:13px;color:#8A98B4;margin-top:3px !important;">Items you have listed on Grovance</p>
+        </div>
+        <button onclick="showView('view-post')"
+            style="background:#0D1B3E;color:#fff;border:none;padding:10px 20px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+            + List New Item
+        </button>
+    </div>
+
+    <div id="my-listings-grid" style="display:flex;flex-direction:column;gap:14px;"></div>
+</section>
+
+<!-- ══ AI NEGOTIATION CHAT MODAL ═════════════════════ -->
+<div id="chat-modal" style="display:none;position:fixed;inset:0;background:rgba(13,27,62,0.65);z-index:10000;align-items:center;justify-content:center;" onclick="closeChatModal(event)">
+    <div onclick="event.stopPropagation()" style="width:90%;max-width:480px;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(13,27,62,0.3);">
+
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-dot"></div>
+            <div style="flex:1;">
+                <div style="font-weight:700;font-size:14px;">AI Price Negotiator</div>
+                <div id="chat-item-name" style="font-size:11px;opacity:0.75;margin-top:1px;"></div>
+            </div>
+            <div style="text-align:right;">
+                <div style="font-size:11px;opacity:0.7;">Listed at</div>
+                <div id="chat-item-price" style="font-weight:800;font-size:14px;color:#FFD54F;"></div>
+            </div>
+            <button onclick="closeChatModal()" style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:22px;cursor:pointer;margin-left:12px;line-height:1;">×</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="chat-messages" class="chat-messages"></div>
+
+        <!-- Deal banner — shown when deal is agreed -->
+        <div id="chat-deal-banner" class="deal-banner" style="display:none;margin:0 12px 0;">
+            <div>
+                <div style="font-size:12px;opacity:0.85;">Deal Agreed At</div>
+                <div id="chat-agreed-price" style="font-size:22px;font-weight:900;"></div>
+            </div>
+            <button onclick="sendDealToSeller()"
+                style="background:#fff;color:#1B5E20;border:none;padding:10px 20px;border-radius:6px;font-weight:800;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                Send to Seller on WhatsApp
+            </button>
+        </div>
+
+        <!-- Input -->
+        <div class="chat-input-row">
+            <input id="chat-input" type="text" placeholder="Make your offer or ask a question...">
+            <button id="chat-send-btn" class="chat-send-btn" onclick="sendChatMessage()">Send →</button>
+        </div>
+
+        <div style="background:#F8F9FC;padding:8px 14px;font-size:11px;color:#8A98B4;text-align:center;border-top:1px solid #DDE3EE;">
+            🤖 AI represents the seller · Final deal needs seller approval on WhatsApp
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
