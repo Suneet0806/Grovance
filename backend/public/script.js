@@ -1,6 +1,9 @@
 // ── CONFIG ──────────────────────────────────────────────
 const ALLOWED_DOMAINS = ['vit.edu.in','vitapstudent.ac.in','iitm.ac.in','srmist.edu.in','mit.edu'];
-const API = 'http://localhost:5000';
+// ✅ Auto-detects environment — uses Render in production, localhost in development
+const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5000'
+    : 'https://grovance-website.onrender.com';
 
 let currentUser   = JSON.parse(localStorage.getItem('grovanceUser')) || null;
 let liveProducts  = [];
